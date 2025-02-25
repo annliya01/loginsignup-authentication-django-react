@@ -31,10 +31,16 @@ const getAuthHeaders = () => {
 
 export const fetchTasks = async () => {
     const token = localStorage.getItem("token"); 
+    if (!token) {
+        throw new Error("No authentication token found. Please log in.");
+    }
+
     return axios.get(`${API_BASE_URL}/tasks/`, {
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        headers: {
+            Authorization: `Bearer ${token}`, 
+        },
     });
-};
+}
 
 export const createTask = async (task) => {
     return axios.post(`${API_BASE_URL}/tasks/`, task, {
