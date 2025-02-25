@@ -23,7 +23,42 @@ export const requestPasswordReset = async (email) => {
 export const resetPassword = async (uid, token, password) => {
     return axios.post(`${API_BASE_URL}/password-reset-confirm/${uid}/${token}/`, { password },{ headers: { "Content-Type": "application/json" } });
 };
-export const getTasks = (page) => axios.get(`${API_BASE_URL}?page=${page}`);
-export const createTask = (task) => axios.post(API_BASE_URL, task);
-export const updateTask = (id, task) => axios.put(`${API_BASE_URL}${id}/`, task);
-export const deleteTask = (id) => axios.delete(`${API_BASE_URL}${id}/`);
+
+const getAuthHeaders = () => {
+    const token = localStorage.getItem("token");
+    return token ? { Authorization: `Bearer ${token}` } : {};
+};
+
+export const fetchTasks = async () => {
+    const token = localStorage.getItem("token"); 
+    return axios.get(`${API_BASE_URL}/tasks/`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+    });
+};
+
+export const createTask = async (task) => {
+    return axios.post(`${API_BASE_URL}/tasks/`, task, {
+        headers: getAuthHeaders(),
+    });
+};
+
+// export const updateTask = async (id, task) => {
+//     return axios.put(`${API_BASE_URL}/tasks/${id}/`, task, {
+//         headers: getAuthHeaders(),
+//     });
+// };
+
+export const deleteTask = async (id) => {
+    return axios.delete(`${API_BASE_URL}/tasks/${id}/`, {
+        headers: getAuthHeaders(),
+    });
+};
+export const updateTask = async (id, task) => {
+    console.log("Updating task data:", task); 
+    return axios.put(`${API_BASE_URL}/tasks/${id}/`, task, {
+        headers: {
+            ...getAuthHeaders(),
+            "Content-Type": "application/json",  
+        },
+    });
+};

@@ -23,7 +23,7 @@ const Login = () => {
             const username = formData.username;
 
             loginUser(newaccess,username);
-            navigate("/home");
+            navigate("/todo");
         } catch (error) {
             console.error("Login Error", error.response? error.response.data:error);
             alert("Invalid credentials");

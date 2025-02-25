@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import Navbar from "./components/NAvbar";
 import ResetPassword from "./components/ResetPassword";
 import ForgotPassword from "./components/ForgotPassword";
+import ToDoList from "./components/ToDoList";
 
 
 function App() {
@@ -14,7 +15,8 @@ function App() {
             <Router>
                 <Navbar /> 
                 <Routes>
-                    <Route path="/" element={<Home/>} />
+                    <Route path="/" element={<Home />} />
+                    <Route path="/todo" element={<ToDoList />} />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/home" element={<Home />} />
